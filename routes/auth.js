@@ -7,7 +7,7 @@ module.exports = function (app, passport) {
     
     // local strategy
     app.post('/login', passport.authenticate('local-login'), authController.login);
-    app.post('/signup', authController.signup);
+    app.post('/signup', passport.authenticate('local-signup'), authController.signup);
     app.get('/logout', authController.logout);
 
     // facebook strategy

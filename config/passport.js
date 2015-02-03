@@ -88,12 +88,13 @@ module.exports = function (passport) {
 
                 // check to see if there's already a user with that email
                 if (existingUser) {
-                    return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+                    return done(null, false, req.flash('signupMessage', 'The login is already in use.'));
                 }
 
                 //  If we're logged in, we're connecting a new local account.
                 if (req.user) {
                     var user            = req.user;
+                    user.local.email    = req.user.email
                     user.local.login    = login;
                     user.local.password = password;
                     user.save(function (err) {
@@ -109,7 +110,8 @@ module.exports = function (passport) {
 
                     newUser.local.login    = login;
                     newUser.local.password = password;
-
+                    newUser.local.email    = req.body.email;
+                    
                     newUser.save(function (err) {
                         if (err) {
                             throw err;
