@@ -36,14 +36,14 @@ module.exports = function (passport) {
     // =========================================================================
     passport.use('local-login', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
-        usernameField : 'email',
+        usernameField : 'login',
         passwordField : 'password',
         passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-    }, function (req, email, password, done) {
+    }, function (req, login, password, done) {
 
         // asynchronous
         process.nextTick(function () {
-            User.findOne({ 'local.email' :  email }, function (err, user) {
+            User.findOne({ 'local.login':  login }, function (err, user) {
                 // if there are any errors, return the error
                 if (err) {
                     return done(err);
@@ -68,18 +68,18 @@ module.exports = function (passport) {
     // LOCAL SIGNUP ============================================================
     // =========================================================================
     passport.use('local-signup', new LocalStrategy({
-        // by default, local strategy uses username and password, we will override with email
-        usernameField : 'email',
+        // by default, local strategy uses username and password
+        usernameField : 'login',
         passwordField : 'password',
         passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-    }, function (req, email, password, done) {
+    }, function (req, login, password, done) {
 
         // asynchronous
         process.nextTick(function () {
 
             //  Whether we're signing up or connecting an account, we'll need
             //  to know if the email address is in use.
-            User.findOne({'local.email': email}, function (err, existingUser) {
+            User.findOne({'local.login': login}, function (err, existingUser) {
 
                 // if there are any errors, return the error
                 if (err) {
@@ -94,7 +94,7 @@ module.exports = function (passport) {
                 //  If we're logged in, we're connecting a new local account.
                 if (req.user) {
                     var user            = req.user;
-                    user.local.email    = email;
+                    user.local.login    = login;
                     user.local.password = password;
                     user.save(function (err) {
                         if (err) {
@@ -107,7 +107,7 @@ module.exports = function (passport) {
                     // create the user
                     var newUser            = new User();
 
-                    newUser.local.email    = email;
+                    newUser.local.login    = login;
                     newUser.local.password = password;
 
                     newUser.save(function (err) {

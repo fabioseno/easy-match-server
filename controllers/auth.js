@@ -13,6 +13,8 @@ module.exports.login = function (req, res) {
 
 module.exports.signup = function (req, res) {
     'use strict';
+    
+    
 };
 
 module.exports.logout = function (req, res) {
