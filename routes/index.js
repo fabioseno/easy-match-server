@@ -2,6 +2,6 @@
 module.exports = function (app, passport) {
     'use strict';
 
-    require('../routes/default')(app);
-    require('../routes/auth')(app, passport);
+    require('./default')(app);
+    require('./auth')(app, passport);
 };
