@@ -45,6 +45,8 @@
 //}
 
 module.exports.logout = function (req, res) {
+    'use strict';
+    
     req.logout();
     res.end();
 };

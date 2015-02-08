@@ -8,7 +8,7 @@ var LocalStrategy    = require('passport-local').Strategy;
 var User       = require('../models/user');
 
 // load the auth variables
-var configAuth = require('./auth'); // use this one for testing
+//var configAuth = require('./auth'); // use this one for testing
 
 module.exports = function (passport) {
     'use strict';
@@ -21,7 +21,7 @@ module.exports = function (passport) {
 
     // used to serialize the user for the session
     passport.serializeUser(function (user, done) {
-        done(null, user.id);
+        done(null, user._id);
     });
 
     // used to deserialize the user
@@ -55,6 +55,7 @@ module.exports = function (passport) {
                 } else {
                     return done(null, user);
                 }
+
             });
         });
 
@@ -93,7 +94,7 @@ module.exports = function (passport) {
                     user.local.login    = login;
                     user.local.password = password;
                     user.lastLogin      = new Date();
-                    
+
                     user.save(function (err) {
                         if (err) {
                             throw err;

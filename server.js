@@ -12,12 +12,12 @@ var port = process.env.PORT || 8080;
 
 // express application setup
 app.use(morgan('dev')); // log every request to the console
-app.use(cookieParser()); // read cookies (needed for auth)
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser()); // read cookies (needed for auth)
 
 // required for passport
-app.use(session({ secret: 'e@zyM@ttt', resave : false, saveUninitialized: true })); // session secret
+app.use(session({ secret: 'e@zyM@ttt', resave : false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 

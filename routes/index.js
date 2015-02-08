@@ -4,4 +4,5 @@ module.exports = function (app, passport) {
 
     require('./default')(app);
     require('./auth')(app, passport);
+    require('./player')(app);
 };
