@@ -21,7 +21,7 @@ module.exports = function (app, passport) {
                     return next(err);
                 }
 
-                res.json(req.user);
+                res.send(req.user.toJSON());
             });
         })(req, res, next);
     });
@@ -41,7 +41,7 @@ module.exports = function (app, passport) {
                     return next(err);
                 }
 
-                res.json(req.user);
+                res.send(req.user.toJSON());
             });
         })(req, res, next);
     });

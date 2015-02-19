@@ -8,14 +8,15 @@ var userSchema = mongoose.Schema({
     local            : {
         login        : String,
         email        : String,
-        password     : String
+        password     : String,
+		name		 : String
     },
     facebook         : {
         id           : String,
         token        : String,
         email        : String,
         name         : String
-    },
+    }/*,
     twitter          : {
         id           : String,
         token        : String,
@@ -29,7 +30,7 @@ var userSchema = mongoose.Schema({
         name         : String
     },
     lastLogin        : Date,
-    creationDate     : Date
+    creationDate     : Date*/
     
 });
 
@@ -40,6 +41,13 @@ var userSchema = mongoose.Schema({
 //    
 //    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 //};
+
+userSchema.methods.toJSON = function() {
+	var user = this.toObject();
+	delete user.password;
+	
+	return user;
+};
 
 // checking if password is valid
 userSchema.methods.validPassword = function (password) {

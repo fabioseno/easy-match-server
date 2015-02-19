@@ -21,11 +21,11 @@ app.use(session({ secret: 'e@zyM@ttt', resave : false, saveUninitialized: false 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
-// routes ======================================================================
+// ## ROUTES ##
 require('./routes/index.js')(app, passport); // load our routes and pass in our app anpd fully configured passport
 
 // ## DATABASE ##
-var configDB = require('./config/database.js');
+var configDB = require('./config/database');
 
 mongoose.connect(configDB.url);
 var db = mongoose.connection;
@@ -39,14 +39,6 @@ db.once('open', function () {
 
 // ## PASSPORT ##
 require('./config/passport')(passport); // pass passport for configuration
-
-
-// ## ROUTES ##
-app.get('/home', function (req, res, next) {
-    'use strict';
-
-    res.send('ok');
-});
 
 app.listen(port);
 console.log('Listening on port ' + port);
