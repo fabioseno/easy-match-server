@@ -74,6 +74,7 @@ module.exports = function (passport) {
 		process.nextTick(function () {
 			//  Whether we're signing up or connecting an account, we'll need
 			//  to know if the email address is in use.
+			
 			User.findOne({'local.login': login}, function (err, existingUser) {
 				var user;
 
@@ -87,14 +88,14 @@ module.exports = function (passport) {
 					return done(null, false, 'The username is already in use.');
 				}
 
-				//  If we're logged in, we're connecting a new local account.
-				if (req.user) {
-					user = req.user;
-					user.creationDate   = new Date();
-				} else { //  We're not logged in, so we're creating a brand new user.
-					// create the user
-					user = new User();
-				}
+//				//  If we're logged in, we're connecting a new local account.
+//				if (req.user) {
+//					user = req.user;
+//					user.creationDate   = new Date();
+//				} else { //  We're not logged in, so we're creating a brand new user.
+//					// create the user
+				user = new User();
+				//}
 
 				user.local.login    = login;
 				user.local.password = password;

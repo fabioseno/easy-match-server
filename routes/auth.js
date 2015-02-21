@@ -6,7 +6,7 @@ module.exports = function (app, passport) {
 
     // local strategy
     app.post('/login', function (req, res, next) {
-        passport.authenticate('local-login', {session: true}, function (err, user, info) {
+        passport.authenticate('local-login', function (err, user, info) {
             
             if (err) {
                 return next(err);
@@ -16,18 +16,18 @@ module.exports = function (app, passport) {
                 return res.status(500).json(info);
             }
 
-            req.login(user, {}, function (err) {
-                if (err) {
+            req.logIn(user, function (err) {
+				if (err) {
                     return next(err);
                 }
 
-                res.send(req.user.toJSON());
+				return res.send(JSON.stringify(user));
             });
         })(req, res, next);
     });
     
     app.post('/signup', function (req, res, next) {
-        passport.authenticate('local-signup', {session: true}, function (err, user, info) {
+        passport.authenticate('local-signup', function (err, user, info) {
             if (err) {
                 return next(err);
             }
@@ -36,12 +36,12 @@ module.exports = function (app, passport) {
                 return res.status(500).json(info);
             }
 
-            req.login(user, {}, function (err) {
+            req.logIn(user, function (err) {
                 if (err) {
                     return next(err);
                 }
 
-                res.send(req.user.toJSON());
+                return res.send(req.user.toJSON());
             });
         })(req, res, next);
     });

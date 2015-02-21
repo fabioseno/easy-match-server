@@ -8,15 +8,16 @@ var userSchema = mongoose.Schema({
     local            : {
         login        : String,
         email        : String,
-        password     : String,
-		name		 : String
+        password     : String
     },
+	lastLogin        : Date
+	/*,
     facebook         : {
         id           : String,
         token        : String,
         email        : String,
         name         : String
-    }/*,
+    },
     twitter          : {
         id           : String,
         token        : String,
@@ -29,7 +30,7 @@ var userSchema = mongoose.Schema({
         email        : String,
         name         : String
     },
-    lastLogin        : Date,
+    
     creationDate     : Date*/
     
 });
