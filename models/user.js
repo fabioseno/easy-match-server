@@ -42,7 +42,9 @@ var userSchema = mongoose.Schema({
 //    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 //};
 
-userSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function () {
+	'use strict';
+	
 	var user = this.toObject();
 	delete user.password;
 	

@@ -84,7 +84,7 @@ module.exports = function (passport) {
 
 				// check to see if there's already a user with that email
 				if (existingUser) {
-					return done(null, false, 'The login is already in use.');
+					return done(null, false, 'The username is already in use.');
 				}
 
 				//  If we're logged in, we're connecting a new local account.
