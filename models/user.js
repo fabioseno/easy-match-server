@@ -1,16 +1,25 @@
-/*global require, module*/
+/*global require, module, Schema*/
 var mongoose = require('mongoose');
 //var bcrypt   = require('bcrypt-nodejs');
 
 // define the schema for our user model
 var userSchema = mongoose.Schema({
 
-    local            : {
-        login        : String,
-        email        : String,
-        password     : String
-    },
+	local            : {
+		login        : String,
+		email        : String,
+		password     : String
+	},
+	favorites: [{
+		playerId: {
+			type: mongoose.Schema.ObjectId,
+			ref: 'User'
+		},
+		associationDate: Date
+	}],
+	creationDate     : Date,
 	lastLogin        : Date
+	
 	/*,
     facebook         : {
         id           : String,
@@ -29,10 +38,7 @@ var userSchema = mongoose.Schema({
         token        : String,
         email        : String,
         name         : String
-    },
-    
-    creationDate     : Date*/
-    
+    }*/
 });
 
 // methods ======================
@@ -45,18 +51,18 @@ var userSchema = mongoose.Schema({
 
 userSchema.methods.toJSON = function () {
 	'use strict';
-	
+
 	var user = this.toObject();
 	delete user.password;
-	
+
 	return user;
 };
 
 // checking if password is valid
 userSchema.methods.validPassword = function (password) {
-    'use strict';
-    return password === this.local.password;
-    //return bcrypt.compareSync(password, this.local.password);
+	'use strict';
+	return password === this.local.password;
+	//return bcrypt.compareSync(password, this.local.password);
 };
 
 // create the model for users and expose it to our app
