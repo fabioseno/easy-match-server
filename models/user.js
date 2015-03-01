@@ -11,6 +11,7 @@ var userSchema = mongoose.Schema({
 		password     : String
 	},
 	favorites: [{
+		_id: false,
 		playerId: {
 			type: mongoose.Schema.ObjectId,
 			ref: 'User'

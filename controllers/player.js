@@ -23,38 +23,37 @@ module.exports.toggleFavorite = function (req, res, next) {
 		}
 
 		if (user) {
-			var favorite = user.favorites.id(req.body.playerId);
-
-			if (favorite) {
-				favorite.remove();
-			} else {
-				user.favorites.push({ playerId: mongoose.Types.ObjectId(req.body.playerId), associationDate: new Date() })
-			}
-
-			user.save(function (err, user) {
-				if (err) {
-					return next(err);
+			User.findOne({ 'favorites.playerId': req.body.playerId }, function (err, favoriteUser) {
+				if (favoriteUser) {
+					user.favorites.pull({ 'favorites.playerId': req.body.playerId });
+				} else {
+					user.favorites.push({ playerId: mongoose.Types.ObjectId(req.body.playerId), associationDate: new Date() })
 				}
-				
-				if (user) {
-					return res.json(user);
-				}
+				user.save(function (err, user) {
+					if (err) {
+						return next(err);
+					}
+
+					if (user) {
+						return res.json(user);
+					}
+				});
 			});
 		}
 	});
 
-	User.findByIdAndUpdate(
-		req.user._id,
-		{
-			$push: {'favorites': { playerId: req.body.favoriteId, associationDate: new Date() }}
-
-		},
-		function (err, user) {
-			if (err) {
-				return next(err);
-			}
-
-			return res.json(user);
-		}
-	);
+//	User.findByIdAndUpdate(
+//		req.user._id,
+//		{
+//			$push: {'favorites': { playerId: req.body.favoriteId, associationDate: new Date() }}
+//
+//		},
+//		function (err, user) {
+//			if (err) {
+//				return next(err);
+//			}
+//
+//			return res.json(user);
+//		}
+//	);
 };
